@@ -1,32 +1,53 @@
-import java.util.Scanner;
+/*
+ * Perfect Number Checker
+ *
+ * This program first finds all perfect numbers between 1 and 200.
+ * Then, it allows the user to enter an upper limit and finds perfect numbers up to that limit.
+ *
+ * A perfect number is a number where the sum of its proper divisors, excluding itself.
+ * equals the number itself. For example, 6 is perfect because 1 + 2 + 3 = 6.
+ *
+ * The program uses loops and methods to efficiently find and display perfect numbers.
+ * It also ensures that large numbers are handled correctly using the long data type.
+ */
 
-public class PerfectNumberFinder {
-    public static void main(String[] args) {
-        // Initialize scanner to take user input (needed to read the upper limit)
-        Scanner userInputScanner = new Scanner(System.in);
-        
-        // Ask the user for an upper limit
-        // This is the maximum number we'll check for perfect numbers
-        System.out.print("Enter the upper limit for checking perfect numbers: ");
-        long upperLimit = userInputScanner.nextLong();
-        
-        // Start checking numbers from 2 upwards (we skip 1 since it's not a perfect number)
-        for (long currentNumber = 2; currentNumber <= upperLimit; currentNumber++) {
-            long divisorSum = 0;  // Sum of all divisors of the current number
-            
-            // Find divisors of the current number
-            // Every number is divisible by 1, so we start with 1 as the first divisor
-            for (long divisor = 1; divisor < currentNumber; divisor++) {
-                if (currentNumber % divisor == 0) {
-                    divisorSum += divisor; 
-                }
-            }
+ import java.util.Scanner;
 
-            if (divisorSum == currentNumber) {
-                System.out.println("Perfect number found: " + currentNumber);  // Print if it's a perfect number
-            }
-        }
-        
-        userInputScanner.close();  
-    }
-}
+ public class PerfectNumberChecker {
+     public static void main(String[] args) {
+         // Find perfect numbers between 1 and 200 automatically
+         System.out.println("Finding perfect numbers between 1 and 200...");
+         findPerfectNumbers(200);  
+ 
+         // Ask user for a custom upper limit
+         try (Scanner inputScanner = new Scanner(System.in)) {
+             System.out.print("\nEnter a number to find perfect numbers up to that limit: ");
+             long userLimit = inputScanner.nextLong();
+ 
+             // Run the function again for user-defined range
+             findPerfectNumbers(userLimit);
+         } catch (Exception e) {
+             System.out.println("Invalid input. Please enter a valid number.");
+         }
+     }
+ 
+     // Method that finds and prints perfect numbers up to a given limit
+     public static void findPerfectNumbers(long limit) {
+         for (long num = 1; num <= limit; num++) {
+             long sumOfDivisors = 0;
+ 
+             // Loop to find divisors and calculate their sum
+             for (long divisor = 1; divisor < num; divisor++) {
+                 if (num % divisor == 0) {
+                     sumOfDivisors += divisor;
+                 }
+             }
+ 
+             // If sum of divisors matches the number, it's a perfect number
+             if (sumOfDivisors == num) {
+                 System.out.println("Perfect number found: " + num);
+             }
+         }
+     }
+ }
+ 
